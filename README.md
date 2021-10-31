@@ -64,3 +64,5 @@ If you are using VS Code to run this repository, I recommend the [SQLite extensi
     4c. PUT request to `localhost:3000/contacts/{CONTACT_ID}`. Within the body, you can pass in any key listed above in _Schema_ with a new value you wish to update. If you didn't specify an email or business, go ahead and do that!
 
     4d. DELETE request to `localhost:3000/contacts/{CONTACT_ID}`. This will find and delete the contact entity from the database.
+
+As a note: I have attached JSON files with usable bodies if you wish to quickly do that (post_body.json, put_body.json)
