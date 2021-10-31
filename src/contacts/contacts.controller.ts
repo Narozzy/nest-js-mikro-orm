@@ -6,9 +6,11 @@ import {
   Param,
   Post,
   Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
-import { Contacts, ContactType } from './contact.entity';
+import { Contacts } from './contact.entity';
 
 @Controller('contacts')
 export class ContactsController {
@@ -30,7 +32,13 @@ export class ContactsController {
    * @returns Contact that was just created
    */
   @Post()
-  public createContact(@Body() contact: ContactType): Promise<Contacts> {
+  @UsePipes(
+    new ValidationPipe({
+      transform: true,
+      forbidUnknownValues: true,
+    }),
+  )
+  public createContact(@Body() contact: Contacts): Promise<Contacts> {
     return this.contactsService.createContact(contact);
   }
 
@@ -51,9 +59,10 @@ export class ContactsController {
    * @returns Contact with updated values
    */
   @Put(':id')
+  @UsePipes(new ValidationPipe({ transform: true }))
   public updateContact(
     @Param('id') id: string,
-    @Body() updateParams: Partial<ContactType>,
+    @Body() updateParams: Partial<Contacts>,
   ): Promise<Contacts> {
     return this.contactsService.updateContact(id, updateParams);
   }

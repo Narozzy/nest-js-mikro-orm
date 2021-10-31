@@ -1,13 +1,5 @@
 import { Entity, PrimaryKey, Property, Unique } from '@mikro-orm/core';
-
-export type ContactType = {
-  id: string;
-  updatedAt: Date;
-  name: string;
-  phoneNumber: string;
-  email: string;
-  business: string;
-};
+import { IsEmail, IsPhoneNumber, ValidateIf } from 'class-validator';
 
 @Entity({ tableName: 'contacts' })
 export class Contacts {
@@ -21,10 +13,13 @@ export class Contacts {
   @Property()
   name: string;
 
+  @IsPhoneNumber('US')
   @Property()
   @Unique()
   phoneNumber: string;
 
+  @ValidateIf((o) => 'email' in o)
+  @IsEmail()
   @Property({ nullable: true })
   email?: string;
 
