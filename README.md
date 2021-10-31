@@ -1,37 +1,16 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Simple CRUD Assignment
 
+Tech Demonstrated: [Nest](https://github.com/nestjs/nest) framework utilizing [MikroOrm](https://mikro-orm.io/).
+
+---
 ## Installation
 
 ```bash
 $ npm install
 ```
-
+---
 ## Running the app
 
 ```bash
@@ -40,34 +19,42 @@ $ npm run start
 
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
+---
+## Schema
 
-## Test
+The database used is Sqlite, the database has a table: `contacts` which has the following values:
 
-```bash
-# unit tests
-$ npm run test
+| Column Name | Type   |
+| ----------- | ------ |
+| id (PK)     | string |
+| updated_at  | int    |
+| name        | string |
+| phone_number| string |
+| email       | string |
+| business    | string |
 
-# e2e tests
-$ npm run test:e2e
+I have added an additional command to the `start` package.json script which should automatically create the database/table for you then will proceed to bootstrap the NestJS application.
 
-# test coverage
-$ npm run test:cov
-```
+If you are using VS Code to run this repository, I recommend the [SQLite extension](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite) as you can simply click on the query button (should display a play button next to the table name) to see the values that are in the table after each endpoint is hit.
 
-## Support
+---
+## How to run locally
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Ensure you have SQLite installed, use whatever means of adding SQLite to the path. 
 
-## Stay in touch
+2. Run `npm install`
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+3. Run `npm run start`, this should automatically create the database and table in the file: __contact-book.sqlite3__
 
-## License
+4. Utilizing an API platform ([Postman](https://www.postman.com/), [Thunder Client if using VS Code](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client), etc.) or cURL, create the following requests for each endpoint:
+    
+    4a. POST request to `localhost:3000/contacts`. Within the body, specify at least "name" and "phoneNumber", additionally you can specify an "email" and a "business", all of which are string values as indicated in the *Schema* section.
 
-Nest is [MIT licensed](LICENSE).
+        - Take note of the ID passed back, as you will need that for the other requests. This will be referenced below by {CONTACT_ID}
+
+    4b. GET request to `localhost:3000/contacts/{CONTACT_ID}`. After sending, this will retrieve the newly created contact entity from the database.
+
+    4c. PUT request to `localhost:3000/contacts/{CONTACT_ID}`. Within the body, you can pass in any key listed above in *Schema* with a new value you wish to update. If you didn't specify an email or business, go ahead and do that!
+
+    4d. DELETE request to `localhost:3000/contacts/{CONTACT_ID}`. This will find and delete the contact entity from the database.
