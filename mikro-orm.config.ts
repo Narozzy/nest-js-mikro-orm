@@ -2,6 +2,11 @@ import { Options } from '@mikro-orm/core';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import * as path from 'path';
 
+/**
+ * Configuration for MikroORM, this takes the place of passing in a config object within the .forRoot method
+ * of the MikroOrmModule in app.module.ts
+ */
+
 const config: Options = {
   type: 'sqlite',
   host: 'localhost',

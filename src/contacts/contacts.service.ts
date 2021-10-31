@@ -12,6 +12,11 @@ export class ContactsService {
     private readonly contactsRepo: EntityRepository<Contacts>,
   ) {}
 
+  /**
+   * Called by the @Get endpoint in contacts.controller.ts, retrieves a Contact.
+   * @param id The id corresponding to a Contact Entity.
+   * @returns Contact which corresponds to the id passed in.
+   */
   public async getContact(id: string): Promise<Contacts> {
     const queriedContact = await this.contactsRepo.findOne({ id: id });
     if (!queriedContact) {
@@ -20,6 +25,11 @@ export class ContactsService {
     return queriedContact;
   }
 
+  /**
+   * Called by the @Post endpoint in contacts.controller.ts, creates and inserts a new Contact.
+   * @param contact an object which will be used to create a new Contact Entity
+   * @returns Contact that was created
+   */
   public async createContact({
     name,
     phoneNumber,
@@ -37,10 +47,20 @@ export class ContactsService {
     return contact;
   }
 
+  /**
+   * Called by the @Delete endpoint in contacts.controller.ts, deletes an existing Contact from the database.
+   * @param id The id corresponding to a Contact Entity
+   */
   public async deleteContact(id: string): Promise<void> {
     await this.contactsRepo.nativeDelete({ id: id });
   }
 
+  /**
+   *
+   * @param id The id corresponding to a Contact Entity
+   * @param contactUpdateParams A subset or all keys with new values that will be used to update the entry in the database
+   * @returns Contact with newly updated values.
+   */
   public async updateContact(
     id: string,
     contactUpdateParams: Partial<Contacts>,

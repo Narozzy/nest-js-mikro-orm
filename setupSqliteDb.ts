@@ -1,3 +1,8 @@
+/**
+ * Helper script, this will just create the database and table
+ * locally in the sqlite file.
+ */
+
 import connect, { sql } from '@databases/sqlite';
 
 (async () => {
