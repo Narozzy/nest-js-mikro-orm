@@ -47,7 +47,7 @@ If you are using VS Code to run this repository, I recommend the [SQLite extensi
 
 ## How to run locally
 
-1.  Ensure you have SQLite installed, use whatever means of adding SQLite to the path.
+1.  Ensure you have [SQLite](https://www.sqlite.org/download.html) installed, use whatever means of adding SQLite to the path.
 
 2.  Run `npm install`
 
